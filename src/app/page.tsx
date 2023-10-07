@@ -1,23 +1,12 @@
-"use client";
 import { Button } from "@/components/ui/button";
-import { api } from "@/utils/api";
+import { serverClient } from "@/utils/server";
 
-export default function Home() {
-  const { data, isLoading, isError, refetch } =
-    api.auth.getSecretToken.useQuery();
-
-  if (isLoading) {
-    return "loading";
-  }
-  if (isError) {
-    return "error";
-  }
-
+export default async function Home() {
+  const trpc = await serverClient();
+  const data = await trpc.auth.getSecretToken();
   return (
     <main className="container mx-auto my-10">
-      <Button variant="secondary" onClick={void refetch}>
-        Tes {data}
-      </Button>
+      <Button variant="secondary">Tes {data}</Button>
     </main>
   );
 }
