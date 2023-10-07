@@ -10,6 +10,15 @@ export const env = createEnv({
     NEXTAUTH_PASSWORD_ADMIN: z.string().min(1),
     GOOGLE_CLIENT_ID: z.string().min(1),
     GOOGLE_CLIENT_SECRET: z.string().min(1),
+    NODE_ENV: z.enum(["development", "test", "production"]),
+  },
+
+  shared: {
+    VERCEL_URL: z
+      .string()
+      .optional()
+      .transform((v) => (v ? `https://${v}` : undefined)),
+    PORT: z.coerce.number().default(3000),
   },
 
   /**

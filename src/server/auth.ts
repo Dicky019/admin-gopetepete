@@ -59,9 +59,14 @@ export const authOptions: NextAuthOptions = {
 
 export const handler = NextAuth(authOptions);
 
-export const getServerAuthSession = (ctx: {
+type TContext = {
   req: GetServerSidePropsContext["req"];
   res: GetServerSidePropsContext["res"];
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
+} | null;
+
+export const getServerAuthSession = (ctx: TContext = null) => {
+  if (ctx) {
+    return getServerSession(ctx.req, ctx.res, authOptions);
+  }
+  return getServerSession(authOptions);
 };
