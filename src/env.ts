@@ -1,32 +1,33 @@
 import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod";
- 
+
 export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
-    NEXTAUTH_SECRET : z.string().min(1),
-    NEXTAUTH_URL : z.string().url(),
-    NEXTAUTH_EMAIL_ADMIN : z.string().min(1),
-    NEXTAUTH_PASSWORD_ADMIN : z.string().min(1),
-    
+    NEXTAUTH_SECRET: z.string().min(1),
+    NEXTAUTH_URL: z.string().url(),
+    NEXTAUTH_EMAIL_ADMIN: z.string().min(1),
+    NEXTAUTH_PASSWORD_ADMIN: z.string().min(1),
+    GOOGLE_CLIENT_ID: z.string().min(1),
+    GOOGLE_CLIENT_SECRET: z.string().min(1),
   },
- 
+
   /**
    * The prefix that client-side variables must have. This is enforced both at
    * a type-level and at runtime.
    */
   clientPrefix: "PUBLIC_",
- 
+
   client: {
     // PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
   },
- 
+
   /**
    * What object holds the environment variables at runtime. This is usually
    * `process.env` or `import.meta.env`.
    */
   runtimeEnv: process.env,
- 
+
   /**
    * By default, this library will feed the environment variables directly to
    * the Zod validator.
