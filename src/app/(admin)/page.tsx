@@ -1,16 +1,14 @@
 import { Metadata } from "next/types";
 import { driverColumns } from "@/components/table/driver/columns";
-import { TabsTable } from "@/components/tabs/tabs-table";
-import { AddEnum } from "@/lib/enum";
-import { getDrivers } from "@/server/driver/gets";
+import { TabsTable } from "@/components/tabs-table";
 
 export const metadata: Metadata = {
   title: "Drivers",
   description: "Authentication forms built using the components.",
 };
 
-export default async function Home() {
-  const drivers = await getDrivers();
+export default function Drivers() {
+  const drivers = { all: [], todays: [] };
   return (
     <TabsTable
       // isAdd={AddEnum.driver}

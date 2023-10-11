@@ -6,10 +6,11 @@ import "./globals.css";
 import { headers } from "next/headers";
 
 import { getServerAuthSession } from "@/server/auth";
-
 import { AuthProvider } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TRPCReactProvider } from "@/components/providers/trpc-provider";
+import { siteConfig } from "@/config/site";
+import { Toaster } from "react-hot-toast";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -17,19 +18,21 @@ const fontSans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Create T3 Turbo",
-  description: "Simple monorepo with shared backend for web & mobile apps",
-  openGraph: {
-    title: "Create T3 Turbo",
-    description: "Simple monorepo with shared backend for web & mobile apps",
-    url: "https://create-t3-turbo.vercel.app",
-    siteName: "Create T3 Turbo",
+  title: {
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
   },
-  twitter: {
-    card: "summary_large_image",
-    site: "@jullerino",
-    creator: "@jullerino",
+  description: siteConfig.description,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+  icons: {
+    icon: ["/favicon.ico?v=4"],
+    apple: ["/apple-touch-icon?v=4"],
+    shortcut: ["/apple-touch-icon"],
   },
+  manifest: "/site.webmanifest",
 };
 
 export default async function Layout(props: { children: React.ReactNode }) {
@@ -43,6 +46,8 @@ export default async function Layout(props: { children: React.ReactNode }) {
             </TRPCReactProvider>
           </AuthProvider>
         </ThemeProvider>
+
+        <Toaster />
       </body>
     </html>
   );

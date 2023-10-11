@@ -1,5 +1,3 @@
-// "use server"
-
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Row } from "@tanstack/react-table";
 
@@ -8,23 +6,18 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
 
-import { statuses } from "@/lib/data";
 import { IDriver } from "@/types/driver";
-import { deleteDriver } from "@/server/driver/delete";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { AlertDialogContentDelete } from "@/components/alerts/delete-alerts";
 import { AlertDialogContentUpdate } from "@/components/alerts/update-alerts";
-import { updateStatusDriver } from "@/server/driver/update";
 import { DropdownMenuRadioItemStatuses } from "../data-table/data-table-dropdown-radio-item-statuses";
 
 interface DataTableRowActionsProps {
@@ -63,17 +56,16 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         <AlertDialogContentDelete
           title={data.namaLengkap}
           onContinue={async () => {
-            await deleteDriver(data.id);
+            // await deleteDriver(data.id);
           }}
         />
         <AlertDialogContentUpdate
           title={data.namaLengkap}
           onContinue={async () => {
-            await updateStatusDriver(data.user.id, !(data.status == "done"));
+            // await updateStatusDriver(data.user.id, !(data.status == "done"));
           }}
         />
       </AlertDialog>
     </Dialog>
   );
 }
-

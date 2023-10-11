@@ -78,7 +78,7 @@ export const UserDesc = () => {
     );
   }
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       <p className="text-sm font-medium leading-none">{data.user.name}</p>
       <p className="text-xs leading-none text-muted-foreground">
         {data.user.email}

@@ -11,14 +11,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { IRute } from "@/types/rute";
 import { AlertDialogContentDelete } from "@/components/alerts/delete-alerts";
-import { useContext } from "react";
-import { TableRowActionContext } from "@/components/tabs/tabs-table";
-import { DialogRute } from "@/components/dialogs/rute-dialog";
 import { Dialog } from "@/components/ui/dialog";
+
+import { IRute } from "@/types/rute";
 import Link from "next/link";
 
 interface DataTableRowActionsProps {
@@ -27,11 +24,11 @@ interface DataTableRowActionsProps {
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const data = row.original;
-  const actionContext = useContext(TableRowActionContext);
+  // const actionContext = useContext(TableRowActionContext);
 
-  if (!actionContext) {
-    throw Error("actionContext null");
-  }
+  // if (!actionContext) {
+  //   throw Error("actionContext null");
+  // }
 
   return (
     <AlertDialog>
@@ -60,9 +57,9 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         </DropdownMenu>
         <AlertDialogContentDelete
           title={data.name}
-          onContinue={async () => await actionContext.onDelete(data.id)}
+          onContinue={async () => {}}
         />
-        <DialogRute data={data} />
+        {/* <DialogRute data={data} /> */}
       </Dialog>
     </AlertDialog>
   );

@@ -17,7 +17,7 @@ import { DataTableRowActions } from "./data-table-row-actions";
 
 export const driverColumns: ColumnDef<IDriver>[] = [
   {
-    accessorKey: "namaLengkap",
+    accessorKey: "nama Lengkap",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Nama Lengkap" />
     ),

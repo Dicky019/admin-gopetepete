@@ -8,7 +8,7 @@ import { prisma } from "@/server/db";
 import { env } from "@/env";
 import type { GetServerSidePropsContext } from "next";
 import { signInCheck, signInGoogle } from "@/services/sign-in";
-import { User, UserRole } from "@prisma/client";
+import { User,} from "@prisma/client";
 
 export type { Session } from "next-auth";
 
@@ -49,7 +49,7 @@ declare module "next-auth/jwt" {
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  debug: true,
+  // debug: env.NODE_ENV === "development",
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,

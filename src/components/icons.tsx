@@ -1,9 +1,12 @@
+import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import { FaCarSide } from "react-icons/fa";
 
 type IconProps = React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
   logo: FaCarSide,
+  sun: SunIcon,
+  moon: MoonIcon,
   spinner: (props: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

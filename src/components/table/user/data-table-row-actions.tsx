@@ -16,12 +16,10 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { deleteUser } from "@/server/user/delete";
 import { IUser } from "@/types/user";
 import { DropdownMenuRadioItemStatuses } from "../data-table/data-table-dropdown-radio-item-statuses";
 import { Dialog } from "@/components/ui/dialog";
 import { AlertDialogContentUpdate } from "@/components/alerts/update-alerts";
-import { updateStatusUser } from "@/server/user/update";
 
 interface DataTableRowActionsProps {
   row: Row<IUser>;
@@ -59,13 +57,13 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         <AlertDialogContentDelete
           title={data.name}
           onContinue={async () => {
-            await deleteUser(data.id, true);
+            // await deleteUser(data.id, true);
           }}
         />
         <AlertDialogContentUpdate
           title={data.name}
           onContinue={async () => {
-            await updateStatusUser(data.id, !(data.status == "done"));
+            // await updateStatusUser(data.id, !(data.status == "done"));
           }}
         />
       </AlertDialog>
