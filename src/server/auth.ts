@@ -7,6 +7,8 @@ import { prisma } from "@/server/db";
 
 import { env } from "@/env";
 import type { GetServerSidePropsContext } from "next";
+import { signInCheck, signInGoogle } from "@/services/sign-in";
+import { User, UserRole } from "@prisma/client";
 
 export type { Session } from "next-auth";
 
@@ -15,39 +17,91 @@ export const providers = ["google"] as const;
 export type OAuthProviders = (typeof providers)[number];
 
 declare module "next-auth" {
-  interface Session {
+  interface Session extends DefaultSession {
     user: {
       id: string;
     } & DefaultSession["user"];
+  }
+
+  interface Profile {
+    email_verified: boolean;
+    picture: string;
+  }
+
+  interface User {
+    id: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id: string;
+    name: string;
+    email: string;
+    picture: string;
+    sub: string;
+    iat: number;
+    exp: number;
+    jti: string;
+    user: User;
   }
 }
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
+  debug: true,
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    signIn: async ({ profile, account, user }) => {
+      console.log({ user, profile });
+
+      if (account?.provider === "google") {
+        if (!profile) {
+          throw Error("Ada Yang Salah");
+        }
+
+        console.log({ account });
+
+        return await signInGoogle({
+          profile,
+          account,
+        });
+      }
+
+      const checkUser = await signInCheck({ user });
+
+      if (!checkUser) {
+        throw Error("Akun Kamu Tidak Terdaftar");
+      }
+
+      return checkUser != null;
+    },
+    // session: ({ session, user }) => ({
+    //   ...session,
+    //   user: {
+    //     ...session.user,
+    //     id: user.id,
+    //   },
+    // }),
 
     // // @TODO - if you wanna have auth on the edge
-    // jwt: ({ token, profile }) => {
-    //   if (profile?.id) {
-    //     token.id = profile.id;
-    //     token.image = profile.picture;
-    //   }
-    //   return token;
-    // },
+    jwt: ({ token, user }) => {
+      user && (token.user = user as User);
 
+      return token;
+    },
+    session: ({ session, token }) => {
+      const user = token.user;
+      return { ...session, user };
+    },
     // // @TODO
     // authorized({ auth }) {
     //   console.log({ auth });

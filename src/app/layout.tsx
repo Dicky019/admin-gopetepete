@@ -7,9 +7,9 @@ import { headers } from "next/headers";
 
 import { getServerAuthSession } from "@/server/auth";
 
-import { AuthProvider } from "@/providers/session-provider";
-import { ThemeProvider } from "@/providers/theme-provider";
-import { TRPCReactProvider } from "@/providers/trpc-provider";
+import { AuthProvider } from "@/components/providers/session-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { TRPCReactProvider } from "@/components/providers/trpc-provider";
 
 const fontSans = Inter({
   subsets: ["latin"],
