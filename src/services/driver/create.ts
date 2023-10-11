@@ -1,14 +1,10 @@
-"use server";
-
 import { faker } from "@faker-js/faker";
-import { revalidatePath } from "next/cache";
 import { prisma } from "@/server/db";
 import { IAPIDriver, IDriverCreate } from "@/types/driver";
 
 export async function createDriver(data?: IDriverCreate) {
   if (!data) {
     const driver = await fakerDriver();
-    revalidatePath("/");
     return driver as IAPIDriver;
   }
 
@@ -26,7 +22,6 @@ export async function createDriver(data?: IDriverCreate) {
     },
   });
 
-  revalidatePath("/");
   return driver as IAPIDriver;
 }
 

@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site";
-// import { buttonVariants } from "~/components/ui/button"
-// import { Icons } from "~/components/icons"
+// import { buttonVariants } from "@/components/ui/button"
+// import { Icons } from "@/components/icons"
 import { MainNav } from "./main-nav";
 // import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { UserNav } from "./user-nav";

@@ -1,5 +1,5 @@
 import { z } from "zod";
-// import { ILocation, locationSchema } from "./location";
+import { ILocation } from "./location";
 import { UserRole } from "@prisma/client";
 import { driverCreateSchema, driverEditSchema } from "@/schemas/driver";
 
@@ -34,6 +34,7 @@ export interface IDriver {
   fotoKtp: string;
   fotoMobil: string;
   status: string;
+  location?: ILocation;
   user: IUserDriver;
 }
 

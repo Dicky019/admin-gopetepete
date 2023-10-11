@@ -1,6 +1,3 @@
-"use server";
-
-import { revalidatePath } from "next/cache";
 import { prisma } from "@/server/db";
 
 export async function updateStatusUser(id: string, status: boolean) {
@@ -10,8 +7,6 @@ export async function updateStatusUser(id: string, status: boolean) {
       status: status,
     },
   });
-
-  revalidatePath("/");
 
   return driver;
 }

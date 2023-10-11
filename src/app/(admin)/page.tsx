@@ -1,8 +1,8 @@
 import { Metadata } from "next/types";
-import { driverColumns } from "~/components/table/driver/columns";
-import { TabsTable } from "~/components/tabs/tabs-table";
-import { AddEnum } from "~/lib/enum";
-import { getDrivers } from "~/server/driver/gets";
+import { driverColumns } from "@/components/table/driver/columns";
+import { TabsTable } from "@/components/tabs/tabs-table";
+import { AddEnum } from "@/lib/enum";
+import { getDrivers } from "@/server/driver/gets";
 
 export const metadata: Metadata = {
   title: "Drivers",

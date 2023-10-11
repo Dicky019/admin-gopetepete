@@ -7,7 +7,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "~/components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import { Icons } from "../icons";
 
 interface IAlertDialogContentDelete {

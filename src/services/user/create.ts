@@ -1,7 +1,6 @@
 import { prisma } from "@/server/db";
 import { IUserCreate } from "@/types/user";
 import { faker } from "@faker-js/faker";
-import { User } from "@prisma/client";
 
 interface CreateRuteProps {
   data?: IUserCreate;

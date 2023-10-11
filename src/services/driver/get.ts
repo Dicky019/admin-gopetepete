@@ -1,7 +1,4 @@
-"use server";
-
-import { revalidatePath } from "next/cache";
-import { prisma } from "~/lib/db";
+import { prisma } from "@/server/db";
 
 export async function getDriver(id: string) {
   const drivers = await prisma.driver.findUnique({
@@ -12,8 +9,6 @@ export async function getDriver(id: string) {
       user: true,
     },
   });
-
-  revalidatePath("/");
 
   return drivers;
 }
