@@ -12,10 +12,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { HiOutlineLogout } from "react-icons/hi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { AlertDialogContentLogout } from "../alerts/logout-alerts";
+import { Icons } from "../icons";
 
 export function UserNav() {
   return (
@@ -36,7 +36,7 @@ export function UserNav() {
           <DropdownMenuSeparator />
           <AlertDialogTrigger asChild>
             <DropdownMenuItem>
-              <HiOutlineLogout className="mx-2" />
+              <Icons.logout className="mx-2" />
               Log out
             </DropdownMenuItem>
           </AlertDialogTrigger>

@@ -1,5 +1,6 @@
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import { FaCarSide } from "react-icons/fa";
+import { HiOutlineLogout } from "react-icons/hi";
 
 type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -7,6 +8,7 @@ export const Icons = {
   logo: FaCarSide,
   sun: SunIcon,
   moon: MoonIcon,
+  logout: HiOutlineLogout,
   spinner: (props: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
