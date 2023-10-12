@@ -1,15 +1,14 @@
 import { Metadata } from "next/types";
-import { ruteColumns } from "@/components/table/rute/columns";
-import { TabsTable } from "@/components/tabs-table";
 import { serverClient } from "@/utils/server";
+import Rutes from "@/components/page/routes";
 
 export const metadata: Metadata = {
-  title: "Rute",
+  title: "Routes",
   description: "Authentication forms built using the components.",
 };
 
-export default async function Rutes() {
+export default async function Page() {
   const trpc = await serverClient();
   const rutes = await trpc.rute.getAll();
-  return <TabsTable columns={ruteColumns} searchKey="name" {...rutes} />;
+  return <Rutes {...rutes} />;
 }

@@ -45,7 +45,9 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
-                <DropdownMenuRadioItemStatuses status={data.status} />
+                <DropdownMenuRadioItemStatuses
+                  status={data.status ? "done" : "canceled"}
+                />
               </DropdownMenuSubContent>
             </DropdownMenuSub>
             <DropdownMenuSeparator />
@@ -55,13 +57,13 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           </DropdownMenuContent>
         </DropdownMenu>
         <AlertDialogContentDelete
-          title={data.name}
+          title={data.name ?? ""}
           onContinue={async () => {
             // await deleteUser(data.id, true);
           }}
         />
         <AlertDialogContentUpdate
-          title={data.name}
+          title={data.name ?? ""}
           onContinue={async () => {
             // await updateStatusUser(data.id, !(data.status == "done"));
           }}

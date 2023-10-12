@@ -8,4 +8,5 @@ type RouterOutput = inferRouterOutputs<AppRouter>;
 
 export type IUserCreate = z.infer<typeof userCreateSchema>;
 
+export type IUsers = RouterOutput["user"]["getAll"]["all"];
 export type IUser = RouterOutput["user"]["getAll"]["all"][number];

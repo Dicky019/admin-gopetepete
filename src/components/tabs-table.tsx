@@ -1,7 +1,6 @@
-"use client";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { DataTable, DataTableProps } from "./table/data-table";
+import { Button } from "./ui/button";
 
 interface TabsTableProps<TData, TValue> {
   todays: DataTableProps<TData, TValue>["data"];
@@ -23,20 +22,15 @@ export function TabsTable<TData, TValue>({
           <TabsTrigger value="today">Today {todays.length}</TabsTrigger>
           <TabsTrigger value="all">All {all.length}</TabsTrigger>
         </TabsList>
+        <Button variant="outline" size="sm">
+          Create
+        </Button>
       </div>
       <TabsContent value="today">
-        <DataTable
-          searchKey={searchKey}
-          data={todays}
-          columns={columns}
-        />
+        <DataTable searchKey={searchKey} data={todays} columns={columns} />
       </TabsContent>
       <TabsContent value="all">
-        <DataTable
-          searchKey={searchKey}
-          data={all}
-          columns={columns}
-        />
+        <DataTable searchKey={searchKey} data={all} columns={columns} />
       </TabsContent>
     </Tabs>
   );

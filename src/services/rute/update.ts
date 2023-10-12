@@ -1,15 +1,7 @@
-
 import { prisma } from "@/server/db";
 import { IRute, IRuteEdit } from "@/types/rute";
 
-interface EditRuteProps {
-  data: IRuteEdit;
-  isRevalidatePath?: boolean;
-}
-
-export async function updateRute({ data }: EditRuteProps) {
-  // console.log({ data, "data.locations": data.locations });
-
+export async function updateRute(data: IRuteEdit) {
   await prisma.location.deleteMany({
     where: {
       ruteId: data.id,
@@ -44,7 +36,6 @@ export async function updateRute({ data }: EditRuteProps) {
       locations: true,
     },
   });
-
 
   return rute satisfies IRute;
 }

@@ -16,26 +16,27 @@ export const statuses = [
   },
 ];
 
-
 export const EmptyRute: IRute = {
   color: "",
   id: "",
   kode: "",
   name: "",
-  locations : [],
+  locations: [],
   createdAt: new Date(),
   updatedAt: new Date(),
 };
 
 export const EmptyUser: IUser = {
-  name: "",
-  email: "",
-  id: "",
-  password: "",
-  role: "driver",
-  status: "",
+  name: "name",
+  email: "email",
+  id: "user-id",
+  role: "passenger",
+  status: true,
   createdAt: new Date(),
   updatedAt: new Date(),
+  emailVerified: null,
+  image: null,
+  driverId: null
 };
 
 export const EmptyDriver: IDriver = {
@@ -59,4 +60,5 @@ export const EmptyDriver: IDriver = {
     role: "driver",
     updatedAt: new Date(),
   },
+  ruteId: "",
 };

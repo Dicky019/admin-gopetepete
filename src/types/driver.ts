@@ -5,6 +5,7 @@ import { inferRouterOutputs } from "@trpc/server";
 import { AppRouter } from "@/server/api";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
+export type IDrivers = RouterOutput["driver"]["getAll"]["all"];
 export type IDriver = RouterOutput["driver"]["getAll"]["all"][number];
 
 export type IDriverCreate = z.infer<typeof driverCreateSchema>;

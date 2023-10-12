@@ -13,13 +13,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Icons } from "@/components/icons";
-import { type IRute, ruteCreateSchema, IRuteCreate } from "@/types/rute";
+import { type IRute, IRuteCreate } from "@/types/rute";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useTransition } from "react";
 import { TiDeleteOutline } from "react-icons/ti";
 import { Label } from "./ui/label";
 import { Card } from "./ui/card";
+import { ruteCreateSchema } from "@/schemas/rute";
 
 type RuteFormProps = {
   data?: IRute;

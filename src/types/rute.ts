@@ -1,20 +1,9 @@
+import { ruteCreateSchema } from "@/schemas/rute";
 import { z } from "zod";
-import { locationSchema } from "./location";
+import { inferRouterOutputs } from "@trpc/server";
+import { AppRouter } from "@/server/api";
 
-const regColor = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
-const regKode = /[A-Z]/;
-
-export const ruteCreateSchema = z.object({
-  name: z.string(),
-  kode: z
-    .string()
-    .max(1)
-    .regex(regKode)
-    .transform((v) => v.toUpperCase()),
-  color: z.string().regex(regColor),
-  locations: z.array(locationSchema),
-  // locationAkhir: locationSchema,
-});
+type RouterOutput = inferRouterOutputs<AppRouter>;
 
 export type IRuteCreate = z.infer<typeof ruteCreateSchema>;
 
@@ -22,18 +11,5 @@ export type IRuteEdit = {
   id: string;
 } & z.infer<typeof ruteCreateSchema>;
 
-export type IRute = {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  name: string;
-  kode: string;
-  color: string;
-  locations: {
-    id: string;
-    latAwal: string;
-    longAwal: string;
-    latAkhir: string;
-    longAkhir: string;
-  }[];
-};
+export type IRutes = RouterOutput["rute"]["getAll"]["all"];
+export type IRute = RouterOutput["rute"]["get"];
