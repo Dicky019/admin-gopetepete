@@ -33,7 +33,7 @@ export const signInGoogle = async ({
     data: {
       email,
       name,
-      emailVerified: email_verified ? new Date(0) : undefined,
+      emailVerified: email_verified ? new Date() : undefined,
       image: picture ?? image,
       status: true,
     },

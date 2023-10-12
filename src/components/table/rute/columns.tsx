@@ -6,6 +6,8 @@ import { DataTableColumnHeader } from "../data-table/data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 import { IRute } from "@/types/rute";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
 
 export const ruteColumns: ColumnDef<IRute>[] = [
   {
@@ -15,7 +17,7 @@ export const ruteColumns: ColumnDef<IRute>[] = [
     ),
     cell: ({ row }) => (
       <div className="text-left">
-        {row.getValue<string>("kode").toUpperCase()}
+        Kode {row.getValue<string>("kode").toUpperCase()}
       </div>
     ),
   },
@@ -56,15 +58,21 @@ export const ruteColumns: ColumnDef<IRute>[] = [
       <DataTableColumnHeader column={column} title="Location" />
     ),
     cell: ({ row }) => (
-      // <div className="text-left">
-      <div className="text-left flex gap-2">
-        <div className="font-semibold p-3 rounded-full">
-          {row.original?.locations.length}
-        </div>
-        <div className="font-semibold flex flex-col gap-1">
-          {row.original?.locations.map(
-            (location) => (
-              <div key={location.id} className="grid grid-cols-2 gap-1 w-fit">
+      <div className="flex items-center space-x-2">
+        <Avatar>
+          <AvatarFallback
+            // style={{
+            //   backgroundColor: row.original?.color ?? "",
+            // }}
+          >
+            {row.original?.locations.length}
+          </AvatarFallback>
+        </Avatar>
+        <Separator orientation="vertical" className="m-1 h-8 " />
+        <div className="font-semibold flex flex-col">
+          {row.original?.locations.map((location, index) => (
+            <div key={location.id} className="flex-col flex ">
+              <div className="grid grid-cols-2 gap-2  w-fit">
                 <Badge variant={"outline"} className="w-fit">
                   {location.latAwal}, {location.longAwal}
                 </Badge>
@@ -72,9 +80,11 @@ export const ruteColumns: ColumnDef<IRute>[] = [
                   {location.latAkhir}, {location.longAkhir}
                 </Badge>
               </div>
-            )
-          )}
-          {/* <span className="font-bold text-lg">/</span> */}
+              {index + 1 !== row.original?.locations.length && (
+                <Separator className="my-2 m-1" />
+              )}
+            </div>
+          ))}
         </div>
       </div>
     ),
