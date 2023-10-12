@@ -35,9 +35,7 @@ export const userColumns: ColumnDef<IUser>[] = [
       <DataTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => (
-      <div className="text-left">
-        {row.getValue<string>("name")}
-      </div>
+      <div className="text-left">{row.getValue<string>("name")}</div>
     ),
   },
 
@@ -47,9 +45,7 @@ export const userColumns: ColumnDef<IUser>[] = [
       <DataTableColumnHeader column={column} title="Email" />
     ),
     cell: ({ row }) => (
-      <div className="text-left">
-        {row.getValue<string>("email")}
-      </div>
+      <div className="text-left">{row.getValue<string>("email")}</div>
     ),
   },
   {
@@ -58,7 +54,7 @@ export const userColumns: ColumnDef<IUser>[] = [
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
-      const value = row.original.status;
+      const value = row.original.status ? "done" : "canceled";
       const status = statuses.find((status) => status.value === value);
 
       if (!status) {

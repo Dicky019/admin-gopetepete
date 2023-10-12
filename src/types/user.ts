@@ -1,18 +1,11 @@
 import { userCreateSchema } from "@/schemas/user";
-import { UserRole } from "@prisma/client";
+
 import { z } from "zod";
+import { inferRouterOutputs } from "@trpc/server";
+import { AppRouter } from "@/server/api";
+
+type RouterOutput = inferRouterOutputs<AppRouter>;
 
 export type IUserCreate = z.infer<typeof userCreateSchema>;
 
-export interface IUser {
-    id: string;
-    name: string;
-    email: string;
-    password?: string;
-    status: string;
-    image?: string;
-    role: UserRole;
-    createdAt: Date;
-    updatedAt: Date;
-  }
-  
+export type IUser = RouterOutput["user"]["getAll"]["all"][number];
