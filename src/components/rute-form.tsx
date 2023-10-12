@@ -15,7 +15,7 @@ import {
 import { Icons } from "@/components/icons";
 import { type IRute, ruteCreateSchema, IRuteCreate } from "@/types/rute";
 import { Input } from "@/components/ui/input";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useTransition } from "react";
 import { TiDeleteOutline } from "react-icons/ti";
 import { Label } from "./ui/label";
@@ -214,9 +214,7 @@ function RuteAwal({ index }: { index: number }) {
           <FormItem className="flex-1">
             <FormLabel>Lat</FormLabel>
             <FormControl>
-              <Input
-                {...field}
-              />
+              <Input {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -247,9 +245,7 @@ function RuteAkhir({ index }: { index: number }) {
           <FormItem className="flex-1">
             <FormLabel>Lat</FormLabel>
             <FormControl>
-              <Input
-                {...field}
-              />
+              <Input {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

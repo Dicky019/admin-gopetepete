@@ -10,7 +10,7 @@ import { AuthProvider } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TRPCReactProvider } from "@/components/providers/trpc-provider";
 import { siteConfig } from "@/config/site";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "sonner";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -46,7 +46,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
             </TRPCReactProvider>
           </AuthProvider>
         </ThemeProvider>
-
+        
         <Toaster />
       </body>
     </html>
