@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../data-table/data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 import { IRute } from "@/types/rute";
+import { Badge } from "@/components/ui/badge";
 
 export const ruteColumns: ColumnDef<IRute>[] = [
   {
@@ -24,7 +25,7 @@ export const ruteColumns: ColumnDef<IRute>[] = [
       <DataTableColumnHeader column={column} title="Color" />
     ),
     cell: ({ row }) => {
-      const color = row.original.color;
+      const color = row.original?.color ?? "";
 
       return (
         <div
@@ -56,16 +57,23 @@ export const ruteColumns: ColumnDef<IRute>[] = [
     ),
     cell: ({ row }) => (
       // <div className="text-left">
-      <div className="flex flex-col text-left">
-        <div className="font-semibold">
-          Rute : {row.original.locations.length}
+      <div className="text-left flex gap-2">
+        <div className="font-semibold p-3 rounded-full">
+          {row.original?.locations.length}
         </div>
-        <div className="font-semibold">
-          {row.original.locations
-            .map(
-              (v) => `${v.latAwal}, ${v.longAwal}/${v.latAkhir}, ${v.longAkhir}`
+        <div className="font-semibold flex flex-col gap-1">
+          {row.original?.locations.map(
+            (location) => (
+              <div key={location.id} className="grid grid-cols-2 gap-1 w-fit">
+                <Badge variant={"outline"} className="w-fit">
+                  {location.latAwal}, {location.longAwal}
+                </Badge>
+                <Badge variant={"outline"} className="w-fit">
+                  {location.latAkhir}, {location.longAkhir}
+                </Badge>
+              </div>
             )
-            .join(" || ")}
+          )}
           {/* <span className="font-bold text-lg">/</span> */}
         </div>
       </div>

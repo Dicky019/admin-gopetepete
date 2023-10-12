@@ -3,6 +3,9 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { getRute } from "@/services/rute/get";
+import { ruteCreateSchema, ruteUpdateSchema } from "@/schemas/rute";
+import { createRute } from "@/services/rute/create";
+import { updateRute } from "@/services/rute/update";
 
 export const ruteRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -28,5 +31,15 @@ export const ruteRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(async ({ input: { id } }) => {
       return await getRute(id);
+    }),
+  create: protectedProcedure
+    .input(ruteCreateSchema)
+    .mutation(async ({ input }) => {
+      return await createRute(input);
+    }),
+  update: protectedProcedure
+    .input(ruteUpdateSchema)
+    .mutation(async ({ input }) => {
+      return await updateRute(input);
     }),
 });

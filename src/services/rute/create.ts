@@ -25,7 +25,7 @@ export async function createRute(data?: IRuteCreate) {
     },
   });
 
-  return rute satisfies IRute;
+  return rute;
 }
 
 export const fakerRute = async () => {

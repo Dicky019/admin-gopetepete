@@ -15,3 +15,9 @@ export const ruteCreateSchema = z.object({
   locations: z.array(locationSchema),
   // locationAkhir: locationSchema,
 });
+
+export const ruteUpdateSchema = z
+  .object({
+    id: z.string(),
+  })
+  .merge(ruteCreateSchema);

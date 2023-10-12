@@ -1,5 +1,5 @@
 import CardRuteForm from "@/components/rute-card-form";
-import { serverClient } from "@/utils/server";
+import { serverClient } from "@/app/_trpc/server";
 import { Metadata } from "next";
 
 type Props = { params: { slug: string } };

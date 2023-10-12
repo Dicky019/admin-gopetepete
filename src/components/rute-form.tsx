@@ -13,29 +13,35 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Icons } from "@/components/icons";
-import { type IRute, IRuteCreate } from "@/types/rute";
+import { type IRute, IRuteUpdate } from "@/types/rute";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { useTransition } from "react";
 import { TiDeleteOutline } from "react-icons/ti";
 import { Label } from "./ui/label";
 import { Card } from "./ui/card";
-import { ruteCreateSchema } from "@/schemas/rute";
+import { ruteUpdateSchema } from "@/schemas/rute";
 
 type RuteFormProps = {
-  data?: IRute;
+  data?: IRuteUpdate;
+  onMutate: (data: IRuteUpdate) => Promise<void>;
+  isLoading: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-export function RuteForm({ className, data, ...props }: RuteFormProps) {
-  const [isPending, startTransition] = useTransition();
-
+export function RuteForm({
+  className,
+  data,
+  onMutate,
+  isLoading,
+  ...props
+}: RuteFormProps) {
   // 1. Define your form.
   const kodeStart = "Kode ";
 
-  const form = useForm<IRuteCreate>({
-    resolver: zodResolver(ruteCreateSchema),
+  const form = useForm<IRuteUpdate>({
+    resolver: zodResolver(ruteUpdateSchema),
     defaultValues: {
       ...data,
+      id: data?.id ?? "",
       kode: data?.kode.replace(kodeStart, ""),
       locations: data?.locations ?? [
         {
@@ -69,28 +75,12 @@ export function RuteForm({ className, data, ...props }: RuteFormProps) {
   };
 
   // 2. Define a submit handler.
-  function onSubmit(values: IRuteCreate) {
-    startTransition(async () => {
-      try {
-        const { kode, ...dataWithOutKode } = values;
-        console.log("Locations", values.locations);
-
-        const rute = {
-          kode: kodeStart + kode,
-          ...dataWithOutKode,
-        };
-
-        if (data) {
-          // await editRute({ data: { id: data.id, ...rute } });
-          toast.success("Successfully Edit!");
-          return;
-        }
-        // await createRute(rute);
-        toast.success("Successfully Create!");
-      } catch (error) {
-        toast.error("There is something wrong!");
-      }
-    });
+  async function onSubmit(values: IRuteUpdate) {
+    try {
+      await onMutate(values);
+    } catch (error) {
+      toast.error("There is something wrong!");
+    }
   }
 
   const resetForm = () => form.reset();
@@ -103,6 +93,7 @@ export function RuteForm({ className, data, ...props }: RuteFormProps) {
             <FormField
               control={form.control}
               name="name"
+              disabled={isLoading}
               render={({ field }) => (
                 <FormItem className="mb-1">
                   <FormLabel>Name</FormLabel>
@@ -118,6 +109,7 @@ export function RuteForm({ className, data, ...props }: RuteFormProps) {
               <FormField
                 control={form.control}
                 name="color"
+                disabled={isLoading}
                 defaultValue="#000000"
                 render={({ field }) => (
                   <FormItem className="flex-1">
@@ -132,6 +124,7 @@ export function RuteForm({ className, data, ...props }: RuteFormProps) {
               <FormField
                 control={form.control}
                 name="kode"
+                disabled={isLoading}
                 render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormLabel>Kode</FormLabel>
@@ -156,44 +149,45 @@ export function RuteForm({ className, data, ...props }: RuteFormProps) {
                       <Button
                         onClick={() => deleteLocation(index)}
                         variant="ghost"
+                        disabled={isLoading}
                         size="icon"
                       >
                         <TiDeleteOutline className="h-4 w-4" />
                       </Button>
                     </div>
                     {/* </div> */}
-                    <RuteAwal index={index} />
-                    <RuteAkhir index={index} />
+                    <RuteAwal isLoading={isLoading} index={index} />
+                    <RuteAkhir isLoading={isLoading} index={index} />
                   </Card>
                 );
               })}
               <Button
-                disabled={isPending}
+                disabled={isLoading}
                 variant="secondary"
                 onClick={addLocation}
               >
-                {isPending && (
+                {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}{" "}
+                )}
                 Add Rute
               </Button>
             </div>
 
             <div className="flex flex-col gap-4 my-4">
-              <Button disabled={isPending} type="submit">
-                {isPending && (
+              <Button disabled={isLoading} type="submit">
+                {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
                 Save
               </Button>
 
               <Button
-                disabled={isPending}
+                disabled={isLoading}
                 variant="outline"
                 onClick={resetForm}
                 type="button"
               >
-                {isPending && (
+                {isLoading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
                 Clear
@@ -206,10 +200,11 @@ export function RuteForm({ className, data, ...props }: RuteFormProps) {
   );
 }
 
-function RuteAwal({ index }: { index: number }) {
+function RuteAwal({ index, isLoading }: { index: number; isLoading: boolean }) {
   return (
     <div className="flex px-2 pb-2 gap-x-2">
       <FormField
+        disabled={isLoading}
         name={`locations.${index}.latAwal`}
         render={({ field }) => (
           <FormItem className="flex-1">
@@ -222,6 +217,7 @@ function RuteAwal({ index }: { index: number }) {
         )}
       />
       <FormField
+        disabled={isLoading}
         name={`locations.${index}.longAwal`}
         render={({ field }) => (
           <FormItem className="flex-1">
@@ -237,10 +233,17 @@ function RuteAwal({ index }: { index: number }) {
   );
 }
 
-function RuteAkhir({ index }: { index: number }) {
+function RuteAkhir({
+  index,
+  isLoading,
+}: {
+  index: number;
+  isLoading: boolean;
+}) {
   return (
     <div className="flex px-2 pb-2 gap-x-2">
       <FormField
+        disabled={isLoading}
         name={`locations.${index}.latAkhir`}
         render={({ field }) => (
           <FormItem className="flex-1">
@@ -254,6 +257,7 @@ function RuteAkhir({ index }: { index: number }) {
       />
       <FormField
         name={`locations.${index}.longAkhir`}
+        disabled={isLoading}
         render={({ field }) => (
           <FormItem className="flex-1">
             <FormLabel>Long</FormLabel>

@@ -8,7 +8,7 @@ import { httpBatchLink, loggerLink } from "@trpc/client";
 import superjson from "superjson";
 
 import { env } from "@/env";
-import { api } from "@/utils/api";
+import { trpc } from "@/app/_trpc/client";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
@@ -33,7 +33,7 @@ export function TRPCReactProvider(props: {
   );
 
   const [trpcClient] = useState(() =>
-    api.createClient({
+    trpc.createClient({
       transformer: superjson,
       links: [
         loggerLink({
@@ -50,17 +50,17 @@ export function TRPCReactProvider(props: {
           },
         }),
       ],
-    }),
+    })
   );
 
   return (
-    <api.Provider client={trpcClient} queryClient={queryClient}>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <ReactQueryStreamedHydration transformer={superjson}>
           {props.children}
         </ReactQueryStreamedHydration>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-    </api.Provider>
+    </trpc.Provider>
   );
 }

@@ -37,5 +37,5 @@ export async function updateRute(data: IRuteEdit) {
     },
   });
 
-  return rute satisfies IRute;
+  return rute;
 }

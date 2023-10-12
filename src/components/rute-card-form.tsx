@@ -1,4 +1,4 @@
-import React from "react";
+"use client"
 import {
   Card,
   CardContent,
@@ -7,13 +7,23 @@ import {
   CardTitle,
 } from "./ui/card";
 import { RuteForm } from "./rute-form";
-import { IRute } from "@/types/rute";
+import { IRuteUpdate } from "@/types/rute";
+import { trpc } from "@/app/_trpc/client";
 
 interface CardRuteFormProps {
-  data?: IRute;
+  data?: IRuteUpdate;
 }
 
 export default function CardRuteForm({ data }: CardRuteFormProps) {
+  const { mutateAsync: createMutate, isLoading: isLoadingCreate } =
+    trpc.rute.create.useMutation();
+  const { mutateAsync: updateMutate, isLoading: isLoadingUpdate } =
+    trpc.rute.update.useMutation();
+
+  const onMutate = async (value: IRuteUpdate) => {
+    data ? await updateMutate(value) : await createMutate(value);
+  };
+
   return (
     <Card className="max-w-max">
       <CardHeader>
@@ -23,7 +33,11 @@ export default function CardRuteForm({ data }: CardRuteFormProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <RuteForm data={data} />
+        <RuteForm
+          data={data}
+          onMutate={onMutate}
+          isLoading={data ? isLoadingUpdate : isLoadingCreate}
+        />
       </CardContent>
     </Card>
   );

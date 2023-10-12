@@ -1,5 +1,5 @@
 import { Metadata } from "next/types";
-import { serverClient } from "@/utils/server";
+import { serverClient } from "@/app/_trpc/server";
 import Drivers from "@/components/page/driver";
 
 export const metadata: Metadata = {
