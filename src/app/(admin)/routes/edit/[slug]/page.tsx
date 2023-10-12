@@ -1,6 +1,7 @@
 import CardRuteForm from "@/components/rute-card-form";
 import { serverClient } from "@/app/_trpc/server";
 import { Metadata } from "next";
+import { IRuteEdit } from "@/types/rute";
 
 type Props = { params: { slug: string } };
 
@@ -20,7 +21,7 @@ export default async function Edit({ params }: Props) {
   const rute = await trpc.rute.get({ id: params.slug });
   return (
     <div className="w-full flex justify-center">
-      <CardRuteForm data={rute} />
+      <CardRuteForm data={rute as IRuteEdit} />
     </div>
   );
 }

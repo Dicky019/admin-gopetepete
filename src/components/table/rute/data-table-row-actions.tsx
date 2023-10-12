@@ -45,7 +45,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[160px]">
             {/* <DialogTrigger asChild> */}
-            <Link href={`/routes/edit/${data.id}`}>
+            <Link href={`/routes/edit/${data?.id}`}>
               <DropdownMenuItem>Edit</DropdownMenuItem>
             </Link>
             {/* </DialogTrigger> */}
@@ -56,7 +56,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           </DropdownMenuContent>
         </DropdownMenu>
         <AlertDialogContentDelete
-          title={data.name}
+          title={data?.name ?? ""}
           onContinue={async () => {}}
         />
         {/* <DialogRute data={data} /> */}
