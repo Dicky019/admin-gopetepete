@@ -29,7 +29,7 @@ export function AlertDialogContentUpdate({
   }
 
   return (
-    <DialogContent>
+    <DialogContent id={title}>
       <DialogHeader>
         <DialogTitle>Are you sure?</DialogTitle>
         <DialogDescription>

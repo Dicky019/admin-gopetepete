@@ -9,6 +9,8 @@ import { z } from "zod";
 
 import { deleteDriver } from "@/services/driver/delete";
 import { createDriver } from "@/services/driver/create";
+import { changeRuteSchema } from "@/schemas/driver";
+import { updateRute } from "@/services/driver/update";
 
 export const driverRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -37,6 +39,12 @@ export const driverRouter = createTRPCRouter({
 
   create: protectedProcedure.mutation(() => {
     return createDriver();
+  }),
+
+  changeRute: protectedProcedure
+  .input( changeRuteSchema)
+  .mutation(({ input: { id, ruteId } }) => {
+    return updateRute(id, ruteId);
   }),
 
   delete: protectedProcedure

@@ -1,5 +1,5 @@
 import { prisma } from "@/server/db";
-import { Driver, User, UserRole } from "@prisma/client";
+import { Driver, Rute, User, UserRole } from "@prisma/client";
 import { Prisma } from "@prisma/client";
 
 export async function getDrivers(
@@ -8,6 +8,7 @@ export async function getDrivers(
   const drivers = await prisma.driver.findMany({
     include: {
       user: true,
+      rute: true,
     },
     where,
   });
@@ -17,6 +18,7 @@ export async function getDrivers(
 
 export type MappingDriversProps = ({
   user: User;
+  rute?: Rute;
 } & Driver)[];
 
 export const mappingDrivers = (values: MappingDriversProps) => {

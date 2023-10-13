@@ -12,10 +12,10 @@ model Driver {
   id           String  @id @default(cuid())
   namaLengkap  String
   alamat       String
-  nik          String
-  nokk         String
-  noHp         String
-  noPlatMobil  String
+  nik          String  @unique
+  nokk         String 
+  noHp         String  @unique
+  noPlatMobil  String  @unique
   maxPenumpang Int
   fotoKtp      String
   fotoMobil    String

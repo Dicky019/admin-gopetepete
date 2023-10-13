@@ -10,5 +10,6 @@ export const metadata: Metadata = {
 export default async function Page() {
   const trpc = await serverClient();
   const drivers = await trpc.driver.getAll();
+
   return <Drivers {...drivers} />;
 }

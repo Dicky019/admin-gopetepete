@@ -21,3 +21,16 @@ export async function updateDriver(data: IDriverEdit) {
 
   return result;
 }
+
+export async function updateRute(id: string, ruteId: string) {
+  const driver = await prisma.driver.update({
+    where: { id },
+    data: {
+      ruteId: ruteId,
+    },
+    select : {rute : true,namaLengkap : true}
+  });
+
+  return driver;
+}
+

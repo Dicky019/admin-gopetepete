@@ -107,6 +107,24 @@ export const driverColumns: ColumnDef<IDriver>[] = [
     },
   },
   {
+    accessorKey: "rute",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Rute" />
+    ),
+    cell: ({ row }) => {
+      const value = row.original.rute?.name ?? "-";
+
+      return (
+        <div className="flex w-[100px] items-center">
+          <span>{value}</span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
     accessorKey: "status",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
