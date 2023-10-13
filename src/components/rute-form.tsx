@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Icons } from "@/components/icons";
-import { type IRute, IRuteUpdate } from "@/types/rute";
+import { IRuteUpdate } from "@/types/rute";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { TiDeleteOutline } from "react-icons/ti";
@@ -35,14 +35,13 @@ export function RuteForm({
   ...props
 }: RuteFormProps) {
   // 1. Define your form.
-  const kodeStart = "Kode ";
-
   const form = useForm<IRuteUpdate>({
     resolver: zodResolver(ruteUpdateSchema),
     defaultValues: {
-      ...data,
+      kode: data?.kode ?? "",
+      name: data?.name ?? "",
       id: data?.id ?? "",
-      kode: data?.kode.replace(kodeStart, ""),
+      color : data?.color ?? "#000000",
       locations: data?.locations ?? [
         {
           id: "",
@@ -78,6 +77,7 @@ export function RuteForm({
   async function onSubmit(values: IRuteUpdate) {
     try {
       await onMutate(values);
+      form.reset(data ? values : undefined);
     } catch (error) {
       toast.error("There is something wrong!");
     }
@@ -110,7 +110,7 @@ export function RuteForm({
                 control={form.control}
                 name="color"
                 disabled={isLoading}
-                defaultValue="#000000"
+                // defaultValue="#000000"
                 render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormLabel>Color</FormLabel>
@@ -196,6 +196,7 @@ export function RuteForm({
           </div>
         </form>
       </Form>
+      {/* {JSON.stringify(form.getValues(),null,2)} */}
     </div>
   );
 }

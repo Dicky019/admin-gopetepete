@@ -45,7 +45,7 @@ export function TabsTable<TData, TValue>({
     toast.promise(changeStatus, {
       loading: "Loading...",
       success: (data) => {
-        return `Berhasil terhapus ${data.user.name}`;
+        return `Berhasil create driver ${data.user.name}`;
       },
       error: "Error",
     });
@@ -56,7 +56,7 @@ export function TabsTable<TData, TValue>({
     toast.promise(changeStatus, {
       loading: "Loading...",
       success: (data) => {
-        return `Berhasil terhapus ${data.name}`;
+        return `Berhasil create user ${data.name}`;
       },
       error: "Error",
     });
@@ -73,19 +73,22 @@ export function TabsTable<TData, TValue>({
           <TabsTrigger value="today">Today {todays.length}</TabsTrigger>
           <TabsTrigger value="all">All {all.length}</TabsTrigger>
         </TabsList>
-        {isCreate && (
+
+        {isCreate ? (
           <Button disabled={isLoading} asChild variant="outline" size="sm">
             <Link href="/routes/create">Create</Link>
           </Button>
+        ) : (
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={isLoading}
+            onClick={isUser ? createUser : createDriver}
+          >
+            Create
+          </Button>
         )}
-        <Button
-          variant="outline"
-          size="sm"
-          disabled={isLoading}
-          onClick={isUser ? createUser : createDriver}
-        >
-          Create
-        </Button>
+
       </div>
       <TabsContent value="today">
         <DataTable searchKey={searchKey} data={todays} columns={columns} />
