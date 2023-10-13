@@ -1,6 +1,11 @@
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { Prisma } from "@prisma/client";
 import { getsUser } from "@/services/user/gets";
+import { updateStatusUser } from "@/services/user/update";
+import { z } from "zod";
+import { userChangeStatusSchema } from "@/schemas/user";
+import { deleteUser } from "@/services/user/delete";
+import { createUser } from "@/services/user/create";
 
 export const userRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -24,5 +29,19 @@ export const userRouter = createTRPCRouter({
       all: getAll,
       todays: getToday,
     };
+  }),
+
+  create: protectedProcedure.mutation(() => {
+    return createUser({ data: undefined });
+  }),
+
+  changeStatus: protectedProcedure
+    .input(userChangeStatusSchema)
+    .mutation(({ input: { id, status } }) => {
+      return updateStatusUser(id, status);
+    }),
+
+  delete: protectedProcedure.input(z.string()).mutation(({ input }) => {
+    return deleteUser(input);
   }),
 });

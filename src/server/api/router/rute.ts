@@ -6,6 +6,7 @@ import { getRute } from "@/services/rute/get";
 import { ruteCreateSchema, ruteUpdateSchema } from "@/schemas/rute";
 import { createRute } from "@/services/rute/create";
 import { updateRute } from "@/services/rute/update";
+import { deleteRute } from "@/services/rute/delete";
 
 export const ruteRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -27,19 +28,19 @@ export const ruteRouter = createTRPCRouter({
       todays,
     };
   }),
+
   get: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(async ({ input: { id } }) => {
-      return await getRute(id);
+    .query(({ input: { id } }) => {
+      return getRute(id);
     }),
-  create: protectedProcedure
-    .input(ruteCreateSchema)
-    .mutation(async ({ input }) => {
-      return await createRute(input);
-    }),
-  update: protectedProcedure
-    .input(ruteUpdateSchema)
-    .mutation(async ({ input }) => {
-      return await updateRute(input);
-    }),
+  create: protectedProcedure.input(ruteCreateSchema).mutation(({ input }) => {
+    return createRute(input);
+  }),
+  update: protectedProcedure.input(ruteUpdateSchema).mutation(({ input }) => {
+    return updateRute(input);
+  }),
+  delete: protectedProcedure
+    .input(z.string())
+    .mutation(({ input }) => deleteRute(input)),
 });

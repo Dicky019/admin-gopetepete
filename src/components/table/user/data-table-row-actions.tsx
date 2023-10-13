@@ -20,6 +20,8 @@ import { IUser } from "@/types/user";
 import { DropdownMenuRadioItemStatuses } from "../data-table/data-table-dropdown-radio-item-statuses";
 import { Dialog } from "@/components/ui/dialog";
 import { AlertDialogContentUpdate } from "@/components/alerts/update-alerts";
+import { trpc } from "@/app/_trpc/client";
+import { toast } from "sonner";
 
 interface DataTableRowActionsProps {
   row: Row<IUser>;
@@ -27,6 +29,51 @@ interface DataTableRowActionsProps {
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const data = row.original;
+
+  const trpcContext = trpc.useContext();
+
+  const {
+    mutateAsync: mutationChangeStatus,
+    isLoading: isLoadingChangeStatus,
+  } = trpc.user.changeStatus.useMutation({
+    onSettled() {
+      trpcContext.user.getAll.invalidate();
+    },
+  });
+
+  const { mutateAsync: mutationDelete, isLoading: isLoadingDelete } =
+    trpc.user.delete.useMutation({
+      onSettled() {
+        trpcContext.user.getAll.invalidate();
+      },
+    });
+
+  const isloading = isLoadingChangeStatus || isLoadingDelete;
+
+  async function changeStatus() {
+    const changeStatus = mutationChangeStatus({
+      id: data.id,
+      status: !data.status,
+    });
+    toast.promise(changeStatus, {
+      loading: "Loading...",
+      success: (data) => {
+        return `${data.name} status change ${data.status}`;
+      },
+      error: "Error",
+    });
+  }
+
+  async function deleteUser() {
+    const changeStatus = mutationDelete(data.id);
+    toast.promise(changeStatus, {
+      loading: "Loading...",
+      success: (data) => {
+        return `Berhasil terhapus ${data.name}`;
+      },
+      error: "Error",
+    });
+  }
 
   return (
     <Dialog>
@@ -43,7 +90,9 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[160px]">
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
+              <DropdownMenuSubTrigger disabled={isloading}>
+                Status
+              </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
                 <DropdownMenuRadioItemStatuses
                   status={data.status ? "done" : "canceled"}
@@ -51,22 +100,18 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
               </DropdownMenuSubContent>
             </DropdownMenuSub>
             <DropdownMenuSeparator />
-            <AlertDialogTrigger asChild>
+            <AlertDialogTrigger disabled={isloading} asChild>
               <DropdownMenuItem>Delete</DropdownMenuItem>
             </AlertDialogTrigger>
           </DropdownMenuContent>
         </DropdownMenu>
         <AlertDialogContentDelete
           title={data.name ?? ""}
-          onContinue={async () => {
-            // await deleteUser(data.id, true);
-          }}
+          onContinue={deleteUser}
         />
         <AlertDialogContentUpdate
           title={data.name ?? ""}
-          onContinue={async () => {
-            // await updateStatusUser(data.id, !(data.status == "done"));
-          }}
+          onContinue={changeStatus}
         />
       </AlertDialog>
     </Dialog>

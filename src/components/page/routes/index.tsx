@@ -1,3 +1,6 @@
+"use client"
+
+import { trpc } from "@/app/_trpc/client";
 import { ruteColumns } from "@/components/table/rute/columns";
 import { TabsTable } from "@/components/tabs-table";
 import { IRutes } from "@/types/rute";
@@ -8,5 +11,13 @@ interface RutesProps {
 }
 
 export default function Rutes(props: RutesProps) {
-  return <TabsTable columns={ruteColumns} searchKey="name" {...props} />;
+  const { data } = trpc.rute.getAll.useQuery(undefined, {
+    initialData: props,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+  });
+
+  return (
+    <TabsTable isCreate columns={ruteColumns} searchKey="name" {...data} />
+  );
 }

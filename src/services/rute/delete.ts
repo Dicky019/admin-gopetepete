@@ -9,5 +9,5 @@ export async function deleteRute(id: string) {
     },
   });
 
-  return rute satisfies IRute;
+  return rute;
 }

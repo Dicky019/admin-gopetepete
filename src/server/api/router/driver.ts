@@ -5,6 +5,10 @@ import {
 } from "@/services/driver/gets";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { Prisma } from "@prisma/client";
+import { z } from "zod";
+
+import { deleteDriver } from "@/services/driver/delete";
+import { createDriver } from "@/services/driver/create";
 
 export const driverRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -30,4 +34,12 @@ export const driverRouter = createTRPCRouter({
       todays: mappingDrivers(getToday as MappingDriversProps),
     };
   }),
+
+  create: protectedProcedure.mutation(() => {
+    return createDriver();
+  }),
+
+  delete: protectedProcedure
+    .input(z.string())
+    .mutation(({ input }) => deleteDriver(input)),
 });

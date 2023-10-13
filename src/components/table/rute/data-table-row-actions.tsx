@@ -17,6 +17,8 @@ import { Dialog } from "@/components/ui/dialog";
 
 import { IRute } from "@/types/rute";
 import Link from "next/link";
+import { trpc } from "@/app/_trpc/client";
+import { toast } from "sonner";
 
 interface DataTableRowActionsProps {
   row: Row<IRute>;
@@ -24,11 +26,26 @@ interface DataTableRowActionsProps {
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const data = row.original;
-  // const actionContext = useContext(TableRowActionContext);
 
-  // if (!actionContext) {
-  //   throw Error("actionContext null");
-  // }
+  const trpcContext = trpc.useContext();
+
+  const { mutateAsync: mutationDelete, isLoading } =
+    trpc.rute.delete.useMutation({
+      onSettled() {
+        trpcContext.rute.getAll.invalidate();
+      },
+    });
+
+  async function deleteRute() {
+    const changeStatus = mutationDelete(data?.id ?? "");
+    toast.promise(changeStatus, {
+      loading: "Loading...",
+      success: (data) => {
+        return `Berhasil terhapus ${data.name}`;
+      },
+      error: "Error",
+    });
+  }
 
   return (
     <AlertDialog>
@@ -57,7 +74,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         </DropdownMenu>
         <AlertDialogContentDelete
           title={data?.name ?? ""}
-          onContinue={async () => {}}
+          onContinue={deleteRute}
         />
         {/* <DialogRute data={data} /> */}
       </Dialog>

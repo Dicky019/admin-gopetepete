@@ -4,7 +4,6 @@ import { faker } from "@faker-js/faker";
 
 interface CreateRuteProps {
   data?: IUserCreate;
-  isRevalidatePath?: boolean;
 }
 
 export async function createUser({ data }: CreateRuteProps) {

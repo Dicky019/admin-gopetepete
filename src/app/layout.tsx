@@ -46,8 +46,8 @@ export default async function Layout(props: { children: React.ReactNode }) {
             </TRPCReactProvider>
           </AuthProvider>
         </ThemeProvider>
-        
-        <Toaster />
+
+        <Toaster richColors />
       </body>
     </html>
   );
