@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { trpc } from "@/app/_trpc/client";
 import { ruteColumns } from "@/components/table/rute/columns";
@@ -13,8 +13,6 @@ interface RutesProps {
 export default function Rutes(props: RutesProps) {
   const { data } = trpc.rute.getAll.useQuery(undefined, {
     initialData: props,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
   });
 
   return (
