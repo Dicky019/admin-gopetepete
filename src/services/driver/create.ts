@@ -47,7 +47,7 @@ export const fakerDriver = async () => {
     maxPenumpang: faker.number.int({ max: 10, min: 8 }),
     namaLengkap: faker.person.fullName(),
     nik: faker.phone.number("################"),
-    noHp: faker.phone.number("08##-####-####"),
+    noHp: faker.phone.number("08##########"),
     nokk: faker.phone.number("################"),
     noPlatMobil: `DD ${faker.number.int({
       min: 1,
