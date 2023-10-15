@@ -77,7 +77,7 @@ export function RuteForm({
   async function onSubmit(values: IRuteUpdate) {
     try {
       await onMutate(values);
-      form.reset(data ? values : undefined);
+      form.reset( values);
     } catch (error) {
       toast.error("There is something wrong!");
     }
@@ -93,6 +93,7 @@ export function RuteForm({
             <FormField
               control={form.control}
               name="name"
+              defaultValue=""
               disabled={isLoading}
               render={({ field }) => (
                 <FormItem className="mb-1">
@@ -110,7 +111,7 @@ export function RuteForm({
                 control={form.control}
                 name="color"
                 disabled={isLoading}
-                // defaultValue="#000000"
+                defaultValue="#000000"
                 render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormLabel>Color</FormLabel>
@@ -124,6 +125,7 @@ export function RuteForm({
               <FormField
                 control={form.control}
                 name="kode"
+                defaultValue=""
                 disabled={isLoading}
                 render={({ field }) => (
                   <FormItem className="flex-1">
