@@ -8,7 +8,7 @@ export default async function Layout({ children }: LayoutProps) {
   return (
     <>
       <SiteHeader />
-      <main className="container mx-auto py-8">{children}</main>
+      <main className="container mx-auto py-8 mb-16">{children}</main>
     </>
   );
 }

@@ -20,7 +20,7 @@ model Driver {
   fotoKtp      String
   fotoMobil    String
   user         User?
-  rute         Rute?   @relation(fields: [ruteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rute         Rute?   @relation(fields: [ruteId], references: [id], onUpdate: Cascade)
   ruteId       String?
 
   @@index([ruteId])
