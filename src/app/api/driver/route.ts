@@ -3,6 +3,7 @@ import { getUser } from "@/services/user/get";
 import { createDriver } from "@/services/driver/create";
 import { driverCreateSchema } from "@/schemas/driver";
 import { signJwtAccessToken } from "@/lib/jwt";
+import { prisma } from "@/server/db";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -27,6 +28,39 @@ export async function POST(request: NextRequest) {
         code: "400",
         // errors: [{ user: ["Email ini sudah ada"] }],
         error: { message: "Email ini sudah ada" },
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const cekNik = await prisma.driver.findUnique({
+    where: {
+      nik: data.nik,
+    },
+  });
+  const cekNoHP = await prisma.driver.findUnique({
+    where: {
+      noHp: data.noHp,
+    },
+  });
+  const cekNoPlatMobil = await prisma.driver.findUnique({
+    where: {
+      noPlatMobil: data.noPlatMobil,
+    },
+  });
+
+  if (cekNik || cekNoHP || cekNoPlatMobil) {
+    return NextResponse.json(
+      {
+        code: "400",
+        // errors: [{ user: ["Email ini sudah ada"] }],
+        error: {
+          message: `${cekNik && "NIK ini"} ${cekNoHP && "No.HP ini"} ${
+            cekNoPlatMobil && "No.Plat Mobil ini"
+          } ini sudah ada `.trim(),
+        },
       },
       {
         status: 400,
