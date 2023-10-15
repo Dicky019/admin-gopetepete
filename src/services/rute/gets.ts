@@ -8,6 +8,9 @@ export async function getsRute(
     include: {
       locations: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
     where,
   });
 

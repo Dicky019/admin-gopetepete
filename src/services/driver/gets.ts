@@ -10,6 +10,11 @@ export async function getDrivers(
       user: true,
       rute: true,
     },
+    orderBy: {
+      user: {
+        createdAt: "desc",
+      },
+    },
     where,
   });
 
