@@ -12,17 +12,18 @@ model Driver {
   id           String  @id @default(cuid())
   namaLengkap  String
   alamat       String
-  nik          String  @unique
-  nokk         String 
-  noHp         String  @unique
-  noPlatMobil  String  @unique
+  nik          String
+  nokk         String
+  noHp         String
+  noPlatMobil  String
   maxPenumpang Int
   fotoKtp      String
   fotoMobil    String
   user         User?
   rute         Rute?   @relation(fields: [ruteId], references: [id], onUpdate: Cascade)
-  ruteId       String?
+  ruteId       String? 
 
+  @@unique([noHp, noPlatMobil, nik])
   @@index([ruteId])
 }
 
@@ -35,6 +36,8 @@ model Rute {
   color     String
   locations Location[]
   driver    Driver[]
+
+  @@unique([kode, name])
 }
 
 model Location {
