@@ -13,8 +13,8 @@ interface DriversProps {
 export default function Drivers(props: DriversProps) {
   const { data } = trpc.driver.getAll.useQuery(undefined, {
     initialData: props,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
+    // refetchOnMount: false,
+    // refetchOnReconnect: false,
   });
 
   return (
