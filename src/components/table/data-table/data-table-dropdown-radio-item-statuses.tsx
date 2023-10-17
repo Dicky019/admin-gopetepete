@@ -17,7 +17,7 @@ export const DropdownMenuRadioItemStatuses = ({
 }) => (
   <DropdownMenuRadioGroup value={status}>
     {statuses.map((label) => (
-      <DropdownMenuRadioItem key={label.value} value={label.value}>
+      <DropdownMenuRadioItem onClick={onClick} key={label.value} value={label.value}>
         {label.label}
       </DropdownMenuRadioItem>
     ))}

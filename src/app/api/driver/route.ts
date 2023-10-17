@@ -46,8 +46,9 @@ export async function POST(request: NextRequest) {
   });
 }
 
-export async function GET(request: NextRequest) {
+export async function PUT(request: NextRequest) {
   const body = await request.json();
+  console.log({ body });
 
   const driverForm = driverCekSchema.safeParse(body);
 
@@ -100,8 +101,8 @@ export async function GET(request: NextRequest) {
         code: "400",
         // errors: [{ user: ["Email ini sudah ada"] }],
         error: {
-          message: `${cekNik && "NIK ini"} ${cekNoHP && "No.HP ini"} ${
-            cekNoPlatMobil && "No.Plat Mobil ini"
+          message: `${cekNik ? "NIK" : ""} ${cekNoHP ? "No.HP" : ""} ${
+            cekNoPlatMobil ? "No.Plat Mobil" : ""
           } ini sudah ada `.trim(),
         },
       },
@@ -116,4 +117,3 @@ export async function GET(request: NextRequest) {
     data: "Berhasil",
   });
 }
-

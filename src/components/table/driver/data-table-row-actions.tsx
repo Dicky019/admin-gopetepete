@@ -64,6 +64,11 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
       id: data.user.id,
       status: data.status == "done" ? false : true,
     });
+    console.log({
+      id: data.user.id,
+      status: data.status == "done" ? false : true,
+    });
+
     toast.promise(changeStatus, {
       loading: "Loading...",
       success: (data) => {
