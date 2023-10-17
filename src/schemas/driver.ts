@@ -24,6 +24,14 @@ export const driverCreateSchema = z.object({
   fotoMobil: z.string(),
 });
 
+export const driverCekSchema = z.object({
+  email: z.string(),
+  nik: z.string(),
+  noHp: z.string(),
+  noPlatMobil: z.string(),
+});
+
+
 export const driverEditSchema = z.object({
   id: z.string(),
   user: userSchema.merge(z.object({ id: z.string() })),
